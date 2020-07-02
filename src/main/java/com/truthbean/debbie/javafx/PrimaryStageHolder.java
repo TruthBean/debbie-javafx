@@ -9,6 +9,13 @@
  */
 package com.truthbean.debbie.javafx;
 
+import com.truthbean.Logger;
+import com.truthbean.debbie.bean.BeanScanConfiguration;
+import com.truthbean.debbie.bean.GlobalBeanFactory;
+import com.truthbean.logger.LoggerFactory;
+
+import java.util.Set;
+
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.1.0
@@ -21,7 +28,20 @@ class PrimaryStageHolder {
         PrimaryStageHolder.primaryStage = primaryStage;
     }
 
+    static void setPrimaryStage(BeanScanConfiguration configuration, GlobalBeanFactory globalBeanFactory) {
+        Set<Class<?>> scannedClasses = configuration.getScannedClasses();
+        for (Class<?> scannedClass : scannedClasses) {
+            LOGGER.trace(() -> "scannedClass: " + scannedClass);
+            if (PrimaryStage.class.isAssignableFrom(scannedClass)
+                    && scannedClass.getAnnotation(DebbieJavaFx.class) != null) {
+                primaryStage = (PrimaryStage) globalBeanFactory.factoryByNoBean(scannedClass);
+            }
+        }
+    }
+
     static PrimaryStage get() {
         return primaryStage;
     }
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PrimaryStageHolder.class);
 }

@@ -1,6 +1,8 @@
 package com.truthbean.debbie.javafx;
 
+import com.truthbean.debbie.bean.BeanAliceForName;
 import com.truthbean.debbie.bean.BeanComponent;
+import com.truthbean.debbie.bean.BeanType;
 
 import java.lang.annotation.*;
 
@@ -11,7 +13,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@BeanComponent
+@BeanComponent(type = BeanType.SINGLETON, name = "primaryStage")
 public @interface DebbieJavaFx {
 
 }

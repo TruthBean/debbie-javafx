@@ -100,6 +100,11 @@ See the Mulan PSL v2 for more details.
             <artifactId>debbie-core</artifactId>
             <version>${debbie.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.truthbean.debbie</groupId>
+            <artifactId>debbie-boot</artifactId>
+            <version>${debbie.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.truthbean.logger</groupId>
@@ -151,8 +156,35 @@ See the Mulan PSL v2 for more details.
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!-- NOTE: user fat jar, config it to false, else true -->
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>demo.javafx.DemoApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
