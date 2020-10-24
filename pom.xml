@@ -136,6 +136,10 @@ See the Mulan PSL v2 for more details.
                 <version>3.8.1</version>
                 <configuration>
                     <release>11</release>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <compilerArg>-parameters</compilerArg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
@@ -201,6 +205,7 @@ See the Mulan PSL v2 for more details.
                     <charset>UTF-8</charset>
                     <encoding>UTF-8</encoding>
                     <docencoding>UTF-8</docencoding>
+                    <release>11</release>
                 </configuration>
                 <executions>
                     <execution>
