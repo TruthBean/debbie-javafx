@@ -7,22 +7,21 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.debbie.javafx;
+package com.truthbean.debbie.javafx.check;
 
-import com.truthbean.debbie.event.AbstractDebbieEvent;
+import com.truthbean.debbie.boot.DebbieApplication;
+import com.truthbean.debbie.boot.DebbieBootApplication;
 
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.1.0
- * Created on 2020-07-02 12:19.
+ * Created on 2020-07-02 10:44.
  */
-public class ApplicationExitEvent extends AbstractDebbieEvent {
-    /**
-     * Create a new AbstractDebbieEvent.
-     *
-     * @param source the object on which the event initially occurred (never {@code null})
-     */
-    public ApplicationExitEvent(Object source) {
-        super(source);
+@DebbieBootApplication
+public class DemoApplication {
+
+    public static void main(String[] args) {
+        DebbieApplication application = DebbieApplication.create(DemoApplication.class);
+        application.start(args);
     }
 }

@@ -10,24 +10,56 @@
 package com.truthbean.debbie.javafx;
 
 import com.truthbean.Logger;
-import com.truthbean.debbie.bean.DebbieApplicationContext;
-import com.truthbean.debbie.boot.AbstractDebbieApplication;
-import com.truthbean.debbie.event.GenericEventListener;
+import com.truthbean.debbie.bean.GlobalBeanFactory;
+import com.truthbean.debbie.boot.AbstractApplication;
+import com.truthbean.debbie.boot.DebbieApplication;
+import com.truthbean.debbie.concurrent.NamedThreadFactory;
+import com.truthbean.debbie.concurrent.ThreadPooledExecutor;
+import com.truthbean.debbie.core.ApplicationContext;
+import com.truthbean.debbie.event.DefaultEventPublisher;
+import com.truthbean.debbie.properties.DebbieConfigurationCenter;
+import com.truthbean.logger.LoggerFactory;
 import javafx.application.Application;
+import javafx.stage.Stage;
 
 import java.lang.management.ManagementFactory;
+import java.util.concurrent.ThreadFactory;
 
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.1.0
  * Created on 2020-07-02 11:19.
  */
-public class JavaFxApplication extends AbstractDebbieApplication implements GenericEventListener<ApplicationExitEvent> {
-    private final Logger logger;
-    public JavaFxApplication(Logger logger, DebbieApplicationContext applicationContext) {
-        super(logger, applicationContext);
-        this.logger = logger;
+public class JavaFxApplication extends AbstractApplication  {
+    private static final Logger logger = LoggerFactory.getLogger(JavaFxApplication.class);
+
+    private static JavaFxApplication application;
+    public JavaFxApplication() {
+        application = this;
     }
+
+    public static JavaFxApplication getApplication() {
+        return application;
+    }
+
+    @Override
+    public DebbieApplication init(DebbieConfigurationCenter configurationCenter, ApplicationContext applicationContext,
+                                  ClassLoader classLoader) {
+        logger.trace("init ... ");
+        GlobalBeanFactory globalBeanFactory = applicationContext.getGlobalBeanFactory();
+
+        PrimaryStage primaryStage = globalBeanFactory.factory(PrimaryStage.class);
+        PrimaryStageHolder.set(primaryStage);
+
+        DefaultEventPublisher eventPublisher = globalBeanFactory.factory("eventPublisher");
+        WindowsCloseEventListener.createInstance(eventPublisher);
+        super.setLogger(logger);
+
+        return this;
+    }
+
+    private final ThreadFactory namedThreadFactory = new NamedThreadFactory("javafx-application-");
+    private final ThreadPooledExecutor singleThreadPool = new ThreadPooledExecutor(1, 1, namedThreadFactory);
 
     @Override
     protected void start(long beforeStartTime, String... args) {
@@ -36,27 +68,20 @@ public class JavaFxApplication extends AbstractDebbieApplication implements Gene
                 " ( JVM running for "  + uptime + "ms )");
         postBeforeStart();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> this.exit(args)));
-        Application.launch(DebbieJavaFxApplication.class, args);
+        singleThreadPool.execute(() -> Application.launch(DebbieJavaFxApplication.class, args));
     }
 
     @Override
     protected void exit(long beforeStartTime, String... args) {
         logger.trace(() -> "application running time spends " + (System.currentTimeMillis() - beforeStartTime) + "ms");
-    }
-
-    @Override
-    public void onEvent(ApplicationExitEvent event) {
-        logger.info(() -> "application closed by javafx");
-        this.exit();
-    }
-
-    @Override
-    public boolean async() {
-        return true;
-    }
-
-    @Override
-    public Class<ApplicationExitEvent> getEventType() {
-        return ApplicationExitEvent.class;
+        singleThreadPool.destroy();
+        try {
+            Stage stage = PrimaryStageHolder.get().getStage();
+            if (stage.isShowing()) {
+                stage.close();
+            }
+        } catch (Exception e) {
+            logger.error("", e);
+        }
     }
 }

@@ -18,4 +18,8 @@ import javafx.stage.Stage;
  */
 public interface PrimaryStage {
     void init(Stage primaryStage) throws Exception;
+
+    default Stage getStage() {
+        return null;
+    }
 }

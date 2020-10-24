@@ -7,28 +7,26 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.debbie.javafx;
+package com.truthbean.debbie.javafx.check;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
-import java.net.URL;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.1.0
- * Created on 2020-07-02 11:01.
+ * Created on 2020-07-02 10:52.
  */
-@DebbieJavaFx
-public class DemoJavaFx implements PrimaryStage {
+public class DemoController {
+    @FXML
+    private Label label;
 
-    public void init(Stage primaryStage) throws Exception {
-        URL resource = getClass().getResource("demo.fxml");
-        Parent root = FXMLLoader.load(resource);
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
+    public void addImageDirButtonAction(ActionEvent actionEvent) {
+
+    }
+
+    public void addImageButtonAction(ActionEvent actionEvent) {
+
     }
 }

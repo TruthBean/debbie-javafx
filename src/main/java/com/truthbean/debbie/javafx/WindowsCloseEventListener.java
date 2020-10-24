@@ -10,6 +10,7 @@
 package com.truthbean.debbie.javafx;
 
 import com.truthbean.Logger;
+import com.truthbean.debbie.event.ApplicationExitEvent;
 import com.truthbean.debbie.event.DebbieEventPublisher;
 import com.truthbean.logger.LoggerFactory;
 import javafx.event.EventHandler;
@@ -46,7 +47,7 @@ public class WindowsCloseEventListener implements EventHandler<WindowEvent> {
     @Override
     public void handle(WindowEvent event) {
         LOGGER.info("windowEvent ... ");
-        eventPublisher.publishEvent(new ApplicationExitEvent(this));
+        eventPublisher.publishEvent(new ApplicationExitEvent(this, JavaFxApplication.getApplication()));
     }
 
     public static final Logger LOGGER = LoggerFactory.getLogger(WindowsCloseEventListener.class);

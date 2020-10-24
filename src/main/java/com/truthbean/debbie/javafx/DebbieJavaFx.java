@@ -1,6 +1,5 @@
 package com.truthbean.debbie.javafx;
 
-import com.truthbean.debbie.bean.BeanAliceForName;
 import com.truthbean.debbie.bean.BeanComponent;
 import com.truthbean.debbie.bean.BeanType;
 

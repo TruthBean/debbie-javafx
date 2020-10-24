@@ -13,6 +13,7 @@ import com.truthbean.Logger;
 import com.truthbean.debbie.bean.BeanScanConfiguration;
 import com.truthbean.debbie.bean.GlobalBeanFactory;
 import com.truthbean.logger.LoggerFactory;
+import javafx.stage.Stage;
 
 import java.util.Set;
 
@@ -21,8 +22,11 @@ import java.util.Set;
  * @since 0.1.0
  * Created on 2020-07-02 14:36.
  */
-class PrimaryStageHolder {
+public class PrimaryStageHolder {
     private static PrimaryStage primaryStage;
+
+    private PrimaryStageHolder() {
+    }
 
     static void set(PrimaryStage primaryStage) {
         PrimaryStageHolder.primaryStage = primaryStage;
@@ -39,7 +43,7 @@ class PrimaryStageHolder {
         }
     }
 
-    static PrimaryStage get() {
+    public static PrimaryStage get() {
         return primaryStage;
     }
 
