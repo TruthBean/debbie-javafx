@@ -77,7 +77,7 @@ public class JavaFxApplication extends AbstractApplication  {
         singleThreadPool.destroy();
         try {
             Stage stage = PrimaryStageHolder.get().getStage();
-            if (stage.isShowing()) {
+            if (stage != null && stage.isShowing()) {
                 stage.close();
             }
         } catch (Exception e) {

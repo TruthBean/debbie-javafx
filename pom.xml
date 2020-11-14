@@ -14,7 +14,7 @@ See the Mulan PSL v2 for more details.
 
     <groupId>com.truthbean.debbie</groupId>
     <artifactId>debbie-javafx</artifactId>
-    <version>0.1.0-RELEASE</version>
+    <version>0.1.1-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>debbie javafx</name>
@@ -26,7 +26,7 @@ See the Mulan PSL v2 for more details.
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <javafx.version>11.0.2</javafx.version>
-        <debbie.version>0.1.0-RELEASE</debbie.version>
+        <debbie.version>0.1.1-RELEASE</debbie.version>
     </properties>
 
     <repositories>
@@ -98,7 +98,7 @@ See the Mulan PSL v2 for more details.
         <dependency>
             <groupId>com.truthbean.logger</groupId>
             <artifactId>log4j2-boot</artifactId>
-            <version>0.2.0-RELEASE</version>
+            <version>0.3.0-RELEASE</version>
             <scope>test</scope>
         </dependency>
 
@@ -137,9 +137,9 @@ See the Mulan PSL v2 for more details.
                 <configuration>
                     <release>11</release>
                     <encoding>UTF-8</encoding>
-                    <compilerArgs>
+                    <!--<compilerArgs>
                         <compilerArg>-parameters</compilerArg>
-                    </compilerArgs>
+                    </compilerArgs>-->
                 </configuration>
             </plugin>
             <plugin>
